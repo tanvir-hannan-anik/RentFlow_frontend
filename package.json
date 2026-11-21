@@ -1,0 +1,24 @@
+{
+  "name": "equipment-rental-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "engines": { "node": "^22.13.0 || >=24.0.0" },
+  "dependencies": {
+    "next": "16.4.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.5",
+    "tailwindcss": "4.3.5",
+    "daisyui": "5.8.2",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.6"
+  }
+}
