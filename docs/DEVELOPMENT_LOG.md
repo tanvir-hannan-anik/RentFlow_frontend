@@ -92,3 +92,31 @@ Git setup commands are `git init -b main`, `git add .`, and `git commit -m "chor
 - https://nextjs.org/docs/app/getting-started/installation
 - https://nextjs.org/docs/app/api-reference/config/eslint
 - https://daisyui.com/docs/install/nextjs/
+
+## Segment 02 - 2026-11-21
+
+### Review and scope
+
+Reviewed frontend AGENTS.md, the existing frontend/backend code, and the Next.js installation's bundled rewrite and environment documentation before editing. Both repositories began clean. Projects were continued in place. No assignment PDF was present. Only the Express foundation and frontend connection were added for RentFlow.
+
+### Implementation
+
+- Added `BACKEND_URL` to `.env.example`. It is server-only and must be an HTTP(S) origin without paths, credentials, or trailing slash. Development defaults to localhost:5000. Production requires an explicit value.
+- Added the `/api/:path*` rewrite to `next.config.mjs`. Existing project root settings remain. The destination is configured at build time: set the variable before building, keep it at startup, and rebuild when it changes. Separate frontend/backend deployments require a Next.js server or compatible hosting, not static export.
+- Added `src/services/api.js` as a browser helper. It prefixes paths with `/api`, serializes optional JSON bodies, sets request headers, disables caching, uses a default ten-second timeout, and reports JSON HTTP errors or invalid upstream responses. A supplied signal replaces the default timeout.
+- Added `src/components/api-connection-check.js` and conditionally rendered it on the placeholder page. It requests health and shows a small accessible status only during development. Failed requests do not break the page; completed requests do not update an unmounted component.
+- Added `scripts/check-api.mjs` and `npm run test:connection`. The script uses the actual helper against a running frontend proxy. Node needs absolute URLs, so the script resolves browser-relative fetch URLs against `FRONTEND_ORIGIN` (default localhost:3000) and restores fetch afterward.
+- Declared `type: module` in package.json so the integration script can import the JavaScript helper without Node's module-format warning. No packages were added and no lockfile dependency update was needed.
+- Rewrote README.md for the current segment with local/production routing, commands, helper usage, and environment requirements. Earlier Segment 01 entries describe the project at that earlier point.
+
+### Flow in simple English
+
+The browser calls its own `/api/health`. Next.js forwards that request to the separately running Express server. Express returns `{success, message}` with a status code. Next.js passes it back, and the browser helper either returns the JSON or throws a useful error. CORS checks remain on Express for supplied Origin headers; the frontend host's exact origin must be approved. CORS is not authentication.
+
+### Commands and verification
+
+Run `npm run lint`. Set `$env:BACKEND_URL = 'http://localhost:5000'`, then run `npm run build`. Start the backend and `npm run dev` in separate terminals; run `npm run test:connection` from another frontend terminal. Stop development, run `npm start`, and repeat the connection check for production. All commands and manual curl examples are in README.md.
+
+Validation: lint and production build passed. Development proxy checks passed for health, 404, JSON body forwarding, and malformed JSON. The development page included the status component. Production verification includes allowed/rejected Origin forwarding and the absence of the development status. The existing Node 22.12/lint dependency compatibility advisory remains; no system runtime or package upgrades were attempted in this segment. Checks are HTTP-level; no browser interaction test was performed.
+
+No Git repositories were recreated and no push was performed. Segment 02 is committed independently in each application; use `git log -1 --oneline` to inspect the current commit.

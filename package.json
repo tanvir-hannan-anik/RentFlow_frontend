@@ -2,11 +2,13 @@
   "name": "equipment-rental-frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start --port 3000",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "eslint . --max-warnings=0",
+    "test:connection": "node scripts/check-api.mjs"
   },
   "engines": { "node": "^22.13.0 || >=24.0.0" },
   "dependencies": {
