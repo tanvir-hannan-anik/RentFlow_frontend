@@ -1,0 +1,11 @@
+{
+  "hero": "/images/construction.jpg",
+  "categories": [
+    "/images/construction.jpg",
+    "/images/photography.jpg",
+    "/images/vehicles.jpg",
+    "/images/agriculture.jpg",
+    "/images/events.jpg",
+    "/images/electronics.jpg"
+  ]
+}

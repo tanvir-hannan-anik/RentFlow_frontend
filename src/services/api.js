@@ -5,6 +5,13 @@ export async function apiRequest(path, options = {}) {
   }
 
   const headers = new Headers(options.headers);
+  const publicPath = (!options.method || options.method === 'GET') && (path === '/equipment' || path.startsWith('/equipment?') || path.startsWith('/reviews') || path.startsWith('/health') || path === '/auth-options');
+  if (!publicPath && !headers.has('Authorization')) {
+    const { authClient } = await import('./auth-client');
+    const { data, error } = await authClient.token();
+    if (error || !data?.token) { const failure = new Error('Please sign in to continue.'); failure.status = 401; throw failure; }
+    headers.set('Authorization', `Bearer ${data.token}`);
+  }
   headers.set("Accept", "application/json");
   if (options.body !== undefined) headers.set("Content-Type", "application/json");
 

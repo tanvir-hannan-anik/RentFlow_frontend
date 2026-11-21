@@ -120,3 +120,17 @@ Run `npm run lint`. Set `$env:BACKEND_URL = 'http://localhost:5000'`, then run `
 Validation: lint and production build passed. Development proxy checks passed for health, 404, JSON body forwarding, and malformed JSON. The development page included the status component. Production verification includes allowed/rejected Origin forwarding and the absence of the development status. The existing Node 22.12/lint dependency compatibility advisory remains; no system runtime or package upgrades were attempted in this segment. Checks are HTTP-level; no browser interaction test was performed.
 
 No Git repositories were recreated and no push was performed. Segment 02 is committed independently in each application; use `git log -1 --oneline` to inspect the current commit.
+
+## Segment 04 - Authentication pages and session handling
+
+Reviewed AGENTS.md and the installed Next.js authentication, cookies, and redirect guides. Added the official Better Auth React client, preserving the existing /api rewrite. Added responsive neutral login/register forms, required name/email/photo/password fields, mixed-case password guidance, Google sign-in, loading/error states, session-aware navigation, and logout. No visual theme or equipment features were added.
+
+The browser client uses same-origin HttpOnly cookie sessions. JWTs are obtained through Better Auth only when making a protected browser API request and are never stored in localStorage. Added a server-only requireUser helper that forwards the incoming cookie to Express and checks each protected page independently. Dashboard, customer, owner, and admin pages check live backend authorization before rendering. User-provided return URLs are restricted to known dashboard paths. The admin form sends only the target ID/desired role; the backend determines the acting identity and permissions. Google availability is read from a public boolean endpoint, never from client secrets.
+
+The existing Node 22.12 runtime still emits the previously documented frontend engine warning. Dependency installation completed without reported vulnerabilities. Validation and production checks follow below.
+
+## 2026-11-21 — GearRent website and equipment workflow
+
+Implemented the supplied Demo visual direction across the homepage, searchable catalog, details/rental-request page, authentication styling, role dashboards, listing form, favorites, profile, and system states. Catalog and dashboard data come from the Express API. Any authenticated user can create and manage their own equipment. Added responsive navy/orange styling and reused Demo image references.
+
+Verification: production build passed; local homepage and proxied equipment API returned HTTP 200. Browser screenshot capture was unavailable, so visual browser verification remains outstanding. Payment pages explain that online payments are not enabled; rental requests remain unpaid/unconfirmed. See the workspace README.md for setup and import instructions.
