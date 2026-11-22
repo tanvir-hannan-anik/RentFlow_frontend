@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start --port 3000",
     "lint": "eslint . --max-warnings=0",
-    "test:connection": "node scripts/check-api.mjs"
+    "test:connection": "tsx scripts/check-api.ts",
+    "typecheck": "tsc --noEmit"
   },
   "engines": {
     "node": "^22.13.0 || >=24.0.0"
@@ -22,9 +23,14 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "daisyui": "5.8.2",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.6",
-    "tailwindcss": "4.3.5"
+    "tailwindcss": "4.3.5",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
   }
 }

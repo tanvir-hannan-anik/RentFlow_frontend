@@ -1,2 +1,0 @@
-import Link from 'next/link';
-export default function Page() { return <main className="state-page"><span className="state-symbol">×</span><h1>Payment Was Not Completed</h1><p className="muted">No payment was processed through GearRent. Your saved rental requests remain in your dashboard.</p><div className="actions"><Link className="button" href="/dashboard/customer">View My Rentals</Link><Link className="button outline" href="/equipment">Browse Equipment</Link></div></main>; }

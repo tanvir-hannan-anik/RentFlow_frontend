@@ -134,3 +134,9 @@ The existing Node 22.12 runtime still emits the previously documented frontend e
 Implemented the supplied Demo visual direction across the homepage, searchable catalog, details/rental-request page, authentication styling, role dashboards, listing form, favorites, profile, and system states. Catalog and dashboard data come from the Express API. Any authenticated user can create and manage their own equipment. Added responsive navy/orange styling and reused Demo image references.
 
 Verification: production build passed; local homepage and proxied equipment API returned HTTP 200. Browser screenshot capture was unavailable, so visual browser verification remains outstanding. Payment pages explain that online payments are not enabled; rental requests remain unpaid/unconfirmed. See the workspace README.md for setup and import instructions.
+
+## 2026-11-22 — TypeScript, Stripe, imgbb, customer listings
+
+Converted React source/routes to TSX and services/scripts to TypeScript. Added shared domain types and strict frontend type checking. Connected multipart image upload to the server's imgbb endpoint. Added Stripe Checkout, payment verification/status/retry screens, and test-mode display using the configured publishable key. Customer accounts can now open Add Equipment and manage their own pending listings, per the latest user instruction.
+
+Verification: frontend production build and typecheck passed; browser homepage images loaded at desktop/mobile widths without overflow; administrator login and private-route refresh passed; Google reached the Google sign-in page. Updated setup instructions in README.md.
