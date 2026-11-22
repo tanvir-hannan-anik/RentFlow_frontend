@@ -1,3 +1,4 @@
+import { backendOrigin } from "./backend-origin";
 import type {User} from '@/types';
 import "server-only";
 import { cookies } from "next/headers";
@@ -5,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export async function requireUser(path:string, role?:string):Promise<User> {
   const cookieStore = await cookies();
-  const backend = process.env.BACKEND_URL ?? "http://localhost:5000";
+  const backend = backendOrigin();
   let response: Response;
   try {
     response = await fetch(`${backend}/api/${role ?? "me"}`, {
