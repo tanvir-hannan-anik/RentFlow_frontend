@@ -6,9 +6,14 @@ import { redirect } from "next/navigation";
 export async function requireUser(path:string, role?:string):Promise<User> {
   const cookieStore = await cookies();
   const backend = process.env.BACKEND_URL ?? "http://localhost:5000";
-  const response = await fetch(`${backend}/api/${role ?? "me"}`, {
-    headers: { Cookie: cookieStore.toString() }, cache: "no-store", signal: AbortSignal.timeout(10000),
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${backend}/api/${role ?? "me"}`, {
+      headers: { Cookie: cookieStore.toString() }, cache: "no-store", signal: AbortSignal.timeout(10000),
+    });
+  } catch {
+    throw new Error("The account service is unavailable. Make sure the backend is running and try again.");
+  }
   if (response.status === 401) redirect(`/login?next=${encodeURIComponent(path)}`);
   if (response.status === 403) redirect("/forbidden");
   if (!response.ok) throw new Error("Authentication is temporarily unavailable.");
